@@ -82,6 +82,7 @@ const SignIn: VFC = () => {
 						type="password"
 						autoCapitalize="none"
 						value={password}
+						secureTextEntry={true}
 						onChangeText={(text) => setPassword(text)}
 					/>
 					<Button colorScheme="green" isLoading={isLoading} onPress={signInWithEmail}>
@@ -92,7 +93,7 @@ const SignIn: VFC = () => {
 					</Button>
 					{userData && (
 						<Text fontSize="3xl" fontWeight="bold">
-							{userData[0].name}
+							username: {userData[0].name}
 						</Text>
 					)}
 				</VStack>
