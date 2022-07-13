@@ -7,6 +7,7 @@ const SignIn: VFC = () => {
 	const toast = useToast();
 
 	const [name, setName] = useState("");
+	const [age, setAge] = useState("");
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const [isLoading, setIsLoading] = useState(false);
@@ -41,10 +42,17 @@ const SignIn: VFC = () => {
 			setIsLoading(false);
 			return;
 		}
+		const transferNum = parseInt(age);
+		if (isNaN(transferNum)) {
+			toast.show({ description: "age number", duration: 4000, bgColor: "error.500" });
+			return;
+		}
+
 		const { data, error: tableError } = await supabase.from("user").insert([
 			{
+				id: user?.id,
 				name: name,
-				userId: user?.id,
+				age: transferNum,
 			},
 		]);
 
@@ -54,6 +62,7 @@ const SignIn: VFC = () => {
 			return;
 		}
 		setName("");
+		setAge("");
 		setEmail("");
 		setPassword("");
 		setIsLoading(false);
@@ -69,6 +78,10 @@ const SignIn: VFC = () => {
 			<Box alignItems="center" mt={32}>
 				<VStack space={4}>
 					<Input placeholder="name" w="75%" autoCapitalize="none" value={name} onChangeText={(text) => setName(text)} />
+					<Input placeholder="age" w="75%" autoCapitalize="none" value={age} onChangeText={(text) => setAge(text)} />
+					<Text fontSize="xs" color="gray.500">
+						name and age are not needed when login
+					</Text>
 					<Input
 						placeholder="email"
 						w="75%"
@@ -91,11 +104,6 @@ const SignIn: VFC = () => {
 					<Button colorScheme="blue" isLoading={isLoading} onPress={signUpWithEmail}>
 						create account
 					</Button>
-					{userData && (
-						<Text fontSize="3xl" fontWeight="bold">
-							username: {userData[0].name}
-						</Text>
-					)}
 				</VStack>
 			</Box>
 		</SafeAreaView>
