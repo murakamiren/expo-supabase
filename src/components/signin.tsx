@@ -1,4 +1,4 @@
-import { Box, Button, Input, Spacer, Text, useToast, VStack } from "native-base";
+import { Box, Button, Input, Text, useToast, VStack } from "native-base";
 import { useState, VFC } from "react";
 import { SafeAreaView } from "react-native";
 import { supabase } from "../lib/supabase";
